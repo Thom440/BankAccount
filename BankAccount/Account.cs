@@ -19,6 +19,11 @@ namespace BankAccount
         /// <param name="amount">The amount to deposit</param>
         public double Deposit(double amount)
         {
+            if (amount >= 10000)
+            {
+                throw new ArgumentException($"{ nameof(amount)} must be smaller than 10,000");
+            }
+
             if (amount <= 0)
             {
                 throw new ArgumentException($"{nameof(amount)} must be a positive value");

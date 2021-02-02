@@ -11,15 +11,28 @@ namespace BankAccount.Tests
     [TestClass()]
     public class AccountTests
     {
+        [TestMethod]
+        [DataRow(10000)]
+        [DataRow(11234.12)]
+        [DataRow(10000.01)]
+        public void Deposit_TooLarge_ThrowsArgumentException(double tooLargeDeposit)
+        {
+            Account acc = new Account();
+
+            Assert.ThrowsException<ArgumentException>(() => acc.Deposit(tooLargeDeposit));
+        }
+
         [TestMethod()]
-        public void Deposit_PositiveAmount_AddsToBalance()
+        [DataRow(100)]
+        [DataRow(9999.99)]
+        [DataRow(.01)]
+        public void Deposit_PositiveAmount_AddsToBalance(double initialDeposit)
         {
             // AAA - Arrange Act Assert
 
             // Arrange - Creating variables and objects
             Account acc = new Account();
             const double startBalance = 0;
-            const double initialDeposit = 100;
 
             // Act - Execute method under test
             acc.Deposit(initialDeposit);
