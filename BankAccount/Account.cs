@@ -40,7 +40,16 @@ namespace BankAccount
 
         public void Withdraw(double amount)
         {
+            if (amount > Balance)
+            {
+                throw new ArgumentException("You cannot withdraw more than the current balance");
+            }
 
+            if (amount <= 0)
+            {
+                throw new ArgumentException("Withdraw amount must be positive");
+            }
+            Balance -= amount;
         }
     }
 }

@@ -94,5 +94,36 @@ namespace BankAccount.Tests
                     () => acc.Deposit(negativeDeposit)
                 );
         }
+
+        [TestMethod]
+        [DataRow(100, 50)]
+        [DataRow(100, 100)]
+        [DataRow(9.99, 9.99)]
+        public void Withdraw_PositiveAmount_SubtractsFromBalance(double initialDeposit, double withdrawAmount)
+        {
+            double expectedBalance = initialDeposit - withdrawAmount;
+
+            acc.Deposit(initialDeposit);
+            acc.Withdraw(withdrawAmount);
+
+            Assert.AreEqual(expectedBalance, acc.Balance);
+        }
+
+        [TestMethod]
+        public void Withdraw_MoreThanBalance_ThrowsArgumentException()
+        {
+            // An account created with a zero balance
+            Account myAccount = new Account();
+            double withdrawAmount = 1000;
+
+            Assert.ThrowsException<ArgumentException>(() => myAccount.Withdraw(withdrawAmount));
+        }
+
+        [TestMethod]
+        [DataRow(-9.99)]
+        public void Withdraw_NegativeAmount_ThrowsArgumentException(double withdrawAmount)
+        {
+            Assert.ThrowsException<ArgumentException>(() => acc.Withdraw(withdrawAmount));
+        }
     }
 }
