@@ -11,18 +11,26 @@ namespace BankAccount.Tests
     [TestClass()]
     public class AccountTests
     {
+        private Account acc;
+
+        [TestInitialize] // Run code before each test
+        public void Initialize()
+        {
+            acc = new Account();
+        }
+
         [TestMethod]
+        [TestCategory("Deposit")]
         [DataRow(10000)]
         [DataRow(11234.12)]
         [DataRow(10000.01)]
         public void Deposit_TooLarge_ThrowsArgumentException(double tooLargeDeposit)
         {
-            Account acc = new Account();
-
             Assert.ThrowsException<ArgumentException>(() => acc.Deposit(tooLargeDeposit));
         }
 
         [TestMethod()]
+        [TestCategory("Deposit")]
         [DataRow(100)]
         [DataRow(9999.99)]
         [DataRow(.01)]
@@ -31,7 +39,6 @@ namespace BankAccount.Tests
             // AAA - Arrange Act Assert
 
             // Arrange - Creating variables and objects
-            Account acc = new Account();
             const double startBalance = 0;
 
             // Act - Execute method under test
@@ -42,10 +49,10 @@ namespace BankAccount.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Deposit")]
         public void Deposit_PositiveAmount_ReturnsUpdatedBalance()
         {
             // Arrange
-            Account acc = new Account();
             double initialBalance = 0;
             double depositAmount = 10.55;
 
@@ -58,10 +65,10 @@ namespace BankAccount.Tests
         }
 
         [TestMethod]
+        [TestCategory("Deposit")]
         public void Deposit_MultipleAmounts_ReturnsAccumulatedBalance()
         {
             // Arrange
-            Account acc = new Account();
             double deposit1 = 10;
             double deposit2 = 25;
             double expectedBalance = deposit1 + deposit2;
@@ -76,9 +83,9 @@ namespace BankAccount.Tests
         }
 
         [TestMethod]
+        [TestCategory("Deposit")]
         public void Deposit_NegativeAmounts_ThrowsArgumentException()
         {
-            Account acc = new Account();
             double negativeDeposit = -1;
 
             // Assert => Act
