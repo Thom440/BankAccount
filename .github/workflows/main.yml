@@ -30,6 +30,9 @@ jobs:
         
       - name: Setup Nuget
         uses: NuGet/setup-nuget@v1.0.5
+      
+      - name: Retore NuGet Packages
+        run: nuget restore BankAccount.sln
       # Complile app in release mode
       - name: Build App
         run: msBuild BankAccount.sln /p:Configuration=Release
